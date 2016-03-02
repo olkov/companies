@@ -1,0 +1,145 @@
+* {
+	margin: 0;
+	padding: 0;
+	/*font-family: Arial, Helvetica, sans-serif;*/
+	font-size: 16px;
+}
+
+.input {
+	margin: auto;
+	width: 200px;
+}
+
+.input input {
+	margin-top: 4px;
+}
+
+html {
+	text-align: center;
+}
+
+body {
+	display: inline-block;
+}
+
+.content {
+	width: 900px;
+	margin: auto;
+	margin-top: 1px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.image {
+	/*border: solid 1px black;*/
+	margin-top: 18px;
+	margin-left: 18px;
+	height: 175px;
+	width: 215px;
+	text-align: center;
+	float: left;
+}
+
+.image>img {
+	position: relative;
+	max-height: 175px;
+	max-width: 210px;
+	display: inline-block;
+	vertical-align: middle;
+	left: 2px;
+}
+
+.helper {
+	display: inline-block;
+	height: 100%;
+	width: 0px;
+	vertical-align: middle;
+}
+
+.remove, .edit {
+	position: relative;
+	right: 8px;
+	bottom: 202px;
+	float: right;
+	height: 11px;
+	width: 11px;
+	opacity: 0.4;
+	border-width: 0px;
+}
+
+.remove {
+	right: 2px;
+	bottom: 2px;
+}
+
+.edit {
+	right: 2px;
+	top: 3px;
+}
+
+.myTable>tbody>tr .remove {
+	background-image: url(../images/close.gif);
+	background-repeat: no-repeat;
+}
+
+.myTable>tbody>tr .edit {
+	background-image: url(../images/edit.gif);
+	background-repeat: no-repeat;
+}
+
+.remove:hover, .edit:hover {
+	opacity: 1;
+}
+
+.invisible {
+	position: relative;
+	opacity: 0;
+	right: 999999px;
+	width: 20px;
+}
+
+.myTable-hover {
+	width: 100%;
+	border-spacing: 0px;
+}
+
+.myTable>tbody>tr>td, .myTable>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.myTable>thead>tr>th {
+	border-top: 1px solid #ddd;
+}
+
+.myTable>tbody>tr>td:last-child, .myTable>thead>tr>th:last-child {
+	border-top: 0px;
+	border-bottom: 0px;
+	padding: 0;
+	width: 16px;
+}
+
+.myTable>tbody>tr:hover {
+	background-color: #e8e8e8;
+	cursor: pointer;
+}
+
+.myTable>tbody>tr:hover .noHover {
+	background-color: white;
+}
+
+.titleH3 {
+	text-align: center;
+	margin-top: 0px;
+	font-weight: bold;
+}
+
+.titleH {
+	text-align: center;
+	margin-top: 0px;
+}
