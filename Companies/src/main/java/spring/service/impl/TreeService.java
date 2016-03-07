@@ -36,10 +36,10 @@ public class TreeService {
 		if (sum != 0) {
 			sb.append("{\"key\": \"" + root.getIdCompany() + "\", \"title\": \"" + root.getCompanyName() + " | "
 					+ root.getEstimatedEarnings() + "K$ | " + (sum + root.getEstimatedEarnings())
-					+ "K$ |\", \"href\": \"" + "company?id=" + root.getIdCompany() + "\", \"children\": [\r");
+					+ "K$ |\", \"href\": \"" + "#/company/" + root.getIdCompany() + "\", \"children\": [\r");
 		} else {
 			sb.append("{\"key\": \"" + root.getIdCompany() + "\", \"title\": \"" + root.getCompanyName() + " | "
-					+ root.getEstimatedEarnings() + "K$ |\", \"href\": \"" + "company?id=" + root.getIdCompany()
+					+ root.getEstimatedEarnings() + "K$ |\", \"href\": \"" + "#/company/" + root.getIdCompany()
 					+ "\", \"children\": [\r");
 		}
 		final List<Node<Company>> children = tree.getRootElement().getChildren();
@@ -64,25 +64,25 @@ public class TreeService {
 				if (sum2 == 0 || !childElement.hasChildren()) {
 					sb.append("{\"key\": \"" + childElement.getData().getIdCompany() + "\", \"title\": \""
 							+ childElement.getData().getCompanyName() + " | "
-							+ childElement.getData().getEstimatedEarnings() + "K$ |\", \"href\": \"" + "company?id="
+							+ childElement.getData().getEstimatedEarnings() + "K$ |\", \"href\": \"" + "#/company/"
 							+ childElement.getData().getIdCompany() + "\"");
 				} else {
 					sb.append("{\"key\": \"" + childElement.getData().getIdCompany() + "\", \"title\": \""
 							+ childElement.getData().getCompanyName() + " | "
 							+ childElement.getData().getEstimatedEarnings() + "K$ | " + sum2 + " |\", \"href\": \""
-							+ "company?id=" + childElement.getData().getIdCompany() + "\"");
+							+ "#/company/" + childElement.getData().getIdCompany() + "\"");
 				}
 			} else {
 				if (sum2 == 0) {
 					sb.append(", {\"key\": \"" + childElement.getData().getIdCompany() + "\", \"title\": \""
 							+ childElement.getData().getCompanyName() + " | "
-							+ childElement.getData().getEstimatedEarnings() + "K$ |\", \"href\": \"" + "company?id="
+							+ childElement.getData().getEstimatedEarnings() + "K$ |\", \"href\": \"" + "#/company/"
 							+ childElement.getData().getIdCompany() + "\"");
 				} else {
 					sb.append(", {\"key\": \"" + childElement.getData().getIdCompany() + "\", \"title\": \""
 							+ childElement.getData().getCompanyName() + " | "
 							+ childElement.getData().getEstimatedEarnings() + "K$ | " + sum2 + " |\", \"href\": \""
-							+ "company?id=" + childElement.getData().getIdCompany() + "\"");
+							+ "#/company/" + childElement.getData().getIdCompany() + "\"");
 				}
 			}
 			sum2 = 0;

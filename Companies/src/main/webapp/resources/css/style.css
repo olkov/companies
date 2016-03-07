@@ -19,6 +19,10 @@ html {
 }
 
 body {
+	/*display: inline-block;*/
+}
+
+.center {
 	display: inline-block;
 }
 
@@ -125,7 +129,7 @@ body {
 }
 
 .myTable>tbody>tr:hover {
-	background-color: #e8e8e8;
+	/*background-color: #e8e8e8;*/
 	cursor: pointer;
 }
 

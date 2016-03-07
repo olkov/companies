@@ -1,12 +1,12 @@
 package spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import spring.entity.Company;
 import spring.service.CompanyService;
 import spring.service.impl.TreeService;
@@ -18,25 +18,9 @@ public class CompanyController {
 	@Autowired
 	private TreeService treeService;
 
-	@RequestMapping(value = "/company", method = RequestMethod.GET)
-	public String company(@RequestParam(value = "id") String idCompany, Model model) {
-		Company company = new Company();
-		Company company2 = new Company();
-		try {
-			company = companyService.getCompanyById(idCompany);
-			if (company != null && company.getParentId() != null) {
-				company2 = companyService.getCompanyById(String.valueOf(company.getParentId()));
-			}
-		} catch (Exception e) {
-			System.out.println(e + "\n");
-		}
-		model.addAttribute("company", company);
-		model.addAttribute("company2", company2);
-		return "company";
-	}
-
-	@RequestMapping(value = { "/", "companies" })
-	public String homePage(Model model) {
+	@RequestMapping(value = { "/c" })
+	@ResponseBody
+	public String companies() {
 		String json = "";
 		for (Company company : companyService.getAllRootCompanies()) {
 			String str = treeService.cbBTreeAsJson(treeService.get(company.getIdCompany()));
@@ -49,63 +33,55 @@ public class CompanyController {
 			json = "[" + json + "]";
 		}
 		// System.out.println("json:\n" + json);
-		model.addAttribute("companies", json);
-		return "companies";
+		return json;
 	}
 
 	@RequestMapping(value = "/addCompany")
-	public String addCompany(Model model) {
+	public String addCompany() {
 		return "add company";
 	}
 
-	@RequestMapping(value = "/addCompany", method = RequestMethod.POST)
-	public String addCompany(Model model, @RequestParam("companyName") String companyName,
-			@RequestParam("estimatedEarnings") String estimatedEarnings) {
-		companyService.insertCompany(companyName, estimatedEarnings);
-		return "redirect:/";
+	@RequestMapping("/saveCompany")
+	@ResponseBody
+	public void saveCompany(@RequestBody Company company) {
+		companyService.insertCompany(company);
 	}
 
 	@RequestMapping(value = "/addChildCompany")
-	public String addChildCompany(@RequestParam(value = "id") String id, Model model) {
-		Company company = new Company();
-		try {
-			company = companyService.getCompanyById(id);
-		} catch (Exception e) {
-			System.out.println(e + "\n");
-		}
-		model.addAttribute("id", id);
-		model.addAttribute("company", company);
+	public String addChildCompany() {
 		return "add child company";
 	}
 
-	@RequestMapping(value = "/addChildCompany", method = RequestMethod.POST)
-	public String addChildCompany(Model model, @RequestParam("companyName") String companyName,
-			@RequestParam("estimatedEarnings") String estimatedEarnings, @RequestParam(value = "id") String id) {
-		companyService.insertCompany(companyName, estimatedEarnings, id);
-		return "redirect:/company?id=" + id;
+	@RequestMapping(value = { "/all" })
+	public String list() {
+		return "all";
 	}
 
-	@RequestMapping(value = "/updateCompany", method = RequestMethod.GET)
-	public String updateCompany(Model model, @RequestParam(value = "id") String id) {
-		try {
-			model.addAttribute("company", companyService.getCompanyById(id));
-		} catch (Exception e) {
-			System.out.println(e + "\n");
-		}
+	@RequestMapping("/getall")
+	@ResponseBody
+	public List<Company> all() {
+		return this.companyService.getAllCompanies();
+	}
+
+	@RequestMapping(value = "/company")
+	public String company() {
+		return "company";
+	}
+
+	@RequestMapping("/getbyid")
+	@ResponseBody
+	public Company getById(int id) {
+		return companyService.getCompanyById(id);
+	}
+
+	@RequestMapping("/removeCompany")
+	@ResponseBody
+	public void removeCompany(int id) {
+		treeService.removeTreeCompaniesById(String.valueOf(id));
+	}
+
+	@RequestMapping(value = "/updateCompany")
+	public String updateCompany() {
 		return "update company";
-	}
-
-	@RequestMapping(value = "/updateCompany", method = RequestMethod.POST)
-	public String updateCompany(Model model, @RequestParam("companyName") String companyName,
-			@RequestParam("estimatedEarnings") String estimatedEarnings, @RequestParam(value = "id") String idCompany,
-			@RequestParam(value = "parentId") String parentId) {
-		companyService.updateCompany(idCompany, companyName, estimatedEarnings, parentId);
-		return "redirect:/company?id=" + idCompany;
-	}
-
-	@RequestMapping(value = "/removeCompany", method = RequestMethod.GET)
-	public String removeCompany(Model model, @RequestParam(value = "id") String idCompany) {
-		treeService.removeTreeCompaniesById(idCompany);
-		return "redirect:/";
 	}
 }
